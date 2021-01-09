@@ -1,0 +1,6 @@
+framework module ZZVendor {
+  umbrella header "ZZVendor-umbrella.h"
+
+  export *
+  module * { export * }
+}
