@@ -10,10 +10,7 @@
 #endif
 #endif
 
-#import "UIImage+ZZGIFImage.h"
-#import "UIView+ZZHUD.h"
-#import "BackgroundPlayer.h"
-#import "UIView+ZZToast.h"
+#import "ZZVendor.h"
 #import "UIImage+ZZGIFImage.h"
 #import "UIView+ZZHUD.h"
 #import "BackgroundPlayer.h"

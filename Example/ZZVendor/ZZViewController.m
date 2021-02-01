@@ -7,7 +7,7 @@
 //
 
 #import "ZZViewController.h"
-
+#import "ZZVendor_Example-Swift.h"
 @interface ZZViewController ()
 
 @end
@@ -26,4 +26,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    [Alamofire requestWithUrl:@"http://www.baidu.com"];
+}
 @end

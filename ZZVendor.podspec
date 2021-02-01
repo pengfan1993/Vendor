@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZZVendor'
-  s.version          = '0.1.0'
+  s.version          = '0.1.3'
   s.summary          = 'an easy package based on thrid library'
 
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,7 @@ TODO: an easy package collections based on Alamofire, Toast, snapkit,SVProgressH
   s.ios.deployment_target = '10.0'
   s.platform     = :ios, '10.0' # 支持的平台及版本
 
-  s.source_files = 'ZZVendor/Classes/**/*'
+  s.source_files = 'ZZVendor/Classes/ZZVendor.h'
   
    s.resource_bundles = {
      'ZZVendor' => ['ZZVendor/Assets/*.{mp3}']
@@ -58,7 +58,7 @@ TODO: an easy package collections based on Alamofire, Toast, snapkit,SVProgressH
       ss.source_files = 'ZZVendor/Classes/KeepAlive/*'
   end
   
-   s.dependency 'Alamofire', '~> 5.4.0'
+   s.dependency 'Alamofire', '~> 4.8.2'
    s.dependency 'SnapKit', '~> 5.0.1'
    s.dependency 'SVProgressHUD', '~> 2.2.5'
    s.dependency 'Toast', '~> 3.1.0'

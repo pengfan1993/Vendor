@@ -87,11 +87,6 @@ fileprivate struct RawDataParameterEncoding: ParameterEncoding {
     
     
 }
-extension NSObject: ZZAlamofireUtilities {
-    static func test(){
-        
-    }
-}
 
 public extension ZZAlamofireUtilities {
     
@@ -103,7 +98,7 @@ public extension ZZAlamofireUtilities {
     ///   - timeoutInterval: 超时
     /// - Returns: DataRequest实例对象
     static func post(_ url: URLConvertible, parameter: Parameters?, headerFields: [String:String]?, timeoutInterval: TimeInterval = 60) -> DataRequest {
-        return AF.request(url, method: .post, parameters: parameter, encoding: JSONParameterEncoding.init(timeoutInterval: timeoutInterval, json: parameter, headerFields: headerFields))
+        return Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONParameterEncoding.init(timeoutInterval: timeoutInterval, json: parameter, headerFields: headerFields))
       
     }
     
@@ -116,22 +111,7 @@ public extension ZZAlamofireUtilities {
     ///   - timeoutInterval: 超时
     /// - Returns: DataRequest实例对象
     static func post<T: Encodable>(_ url: URLConvertible, parameter: T?, headerFields: [String:String]?, timeoutInterval: TimeInterval = 60) -> DataRequest {
-        return AF.request(url, method: .post, parameters: parameter, encoder: URLEncodedFormParameterEncoder.default) { (request) in
-            //设置默认的请求头
-             if request.value(forHTTPHeaderField: "Content-Type") == nil {
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-             }
-             
-             //设置其它请求头信息
-             if let header = headerFields{
-                 for (key, value) in header {
-                      request.setValue(value, forHTTPHeaderField: key)
-                 }
-             }
-            
-             //设置请求超时
-             request.timeoutInterval = timeoutInterval
-        }
+        return Alamofire.request(url, method: .post, encoding: RawDataParameterEncoding.init(timeoutInterval: timeoutInterval, data: try? JSONEncoder.init().encode(parameter), headerFields: headerFields))
     }
     
     /// 发送一个get请求
@@ -142,23 +122,7 @@ public extension ZZAlamofireUtilities {
     ///   - timeoutInterval: 自定义超时参数
     /// - Returns: 返回一个DataRequest实例
     static func get(_ url: URLConvertible, parameter: Parameters?, headerFields: [String:String]?, timeoutInterval: TimeInterval = 60) -> DataRequest {
-        AF.request(url, method: .get, parameters: parameter, encoding: URLEncoding.default) { (request) in
-            //设置请求超时
-           request.timeoutInterval = timeoutInterval
-           
-           //设置默认的请求头
-           if request.value(forHTTPHeaderField: "Content-Type") == nil {
-              request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-           }
-           
-            //设置其它请求头信息
-           if let header = headerFields{
-              for (key, value) in header {
-                   request.setValue(value, forHTTPHeaderField: key)
-           }
-           }
-
-        }
+        return Alamofire.request(url, method: .get, parameters: parameter, encoding: URLEncoding.default, headers: headerFields ?? [:])
     
     }
     
@@ -170,47 +134,15 @@ public extension ZZAlamofireUtilities {
     ///   - timeoutInterval: 自定义超时参数
     /// - Returns: 返回一个DataRequest实例
     static func get<T: Encodable>(_ url: URLConvertible, parameter: T?, headerFields: [String:String]?, timeoutInterval: TimeInterval = 60) -> DataRequest {
-        
-        return AF.request(url, method: .get, parameters: parameter, encoder: URLEncodedFormParameterEncoder.default) { (request) in
-            
-             //设置默认的请求头
-               if request.value(forHTTPHeaderField: "Content-Type") == nil {
-                  request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-               }
-               
-               //设置其它请求头信息
-               if let header = headerFields{
-                   for (key, value) in header {
-                        request.setValue(value, forHTTPHeaderField: key)
-                   }
-               }
-              
-               //设置请求超时
-               request.timeoutInterval = timeoutInterval
-        }
+        return Alamofire.request(url, method: .get, encoding: RawDataParameterEncoding.init(timeoutInterval: timeoutInterval, data: try? JSONEncoder.init().encode(parameter), headerFields: headerFields))
     }
     
     static func method(_ method: HTTPMethod, url: URLConvertible, parameter: Parameters?, timeoutInterval: TimeInterval, headerFields:[String : String]?) -> DataRequest {
-        return AF.request(url, method: method, parameters: parameter, encoding: JSONParameterEncoding.init(timeoutInterval: timeoutInterval, json: parameter, headerFields: headerFields))
+        return Alamofire.request(url, method: method, parameters: parameter, encoding: JSONParameterEncoding.init(timeoutInterval: timeoutInterval, json: parameter, headerFields: headerFields))
         
     }
+    
     static func method<T: Encodable>(_ method: HTTPMethod, url: URLConvertible, parameter: T?, timeoutInterval: TimeInterval, headerFields:[String : String]?) -> DataRequest {
-        return AF.request(url, method: method, parameters: parameter, encoder: URLEncodedFormParameterEncoder.default) { (request) in
-            //设置默认的请求头
-           if request.value(forHTTPHeaderField: "Content-Type") == nil {
-              request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-           }
-           
-           //设置其它请求头信息
-           if let header = headerFields{
-               for (key, value) in header {
-                    request.setValue(value, forHTTPHeaderField: key)
-               }
-           }
-          
-           //设置请求超时
-           request.timeoutInterval = timeoutInterval
-        }
-        
+        return Alamofire.request(url, method: method,  encoding: RawDataParameterEncoding.init(timeoutInterval: timeoutInterval, data: try? JSONEncoder.init().encode(parameter), headerFields: headerFields))
     }
 }
