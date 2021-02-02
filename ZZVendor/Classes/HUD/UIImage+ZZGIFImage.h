@@ -21,7 +21,7 @@ typedef void (^GIFimageBlock)(UIImage *GIFImage);
 + (UIImage *)zz_imageWithGIFData:(NSData *)data;
 
 /** 根据一个GIF图片的URL 获得GIF image对象 */
-+ (void)zz_imageWithGIFUrl:(NSString *)url and:(GIFimageBlock)gifImageBlock;
++ (void)zz_imageWithGIFFilePath:(NSString *)filePath and:(GIFimageBlock)gifImageBlock;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -72,11 +72,10 @@
         }
     }
 }
-+ (void)zz_imageWithGIFUrl:(NSString *)url and:(GIFimageBlock)gifImageBlock{
-    NSURL *GIFUrl = [NSURL URLWithString:url];
-    if (!GIFUrl) return;
++ (void)zz_imageWithGIFFilePath:(NSString *)filePath and:(GIFimageBlock)gifImageBlock{
+    if (!filePath) return;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSData *CIFData = [NSData dataWithContentsOfURL:GIFUrl];
+        NSData *CIFData = [NSData dataWithContentsOfFile:filePath];
         // 刷新UI在主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             gifImageBlock([UIImage zz_imageWithGIFData:CIFData]);
